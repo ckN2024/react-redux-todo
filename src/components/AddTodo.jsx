@@ -9,12 +9,19 @@ const AddTodo = () => {
     isCompleted: false,
     createdAt: null
   });
+  const [isTitleFilled, setIsTitleFilled] = useState(true)
 
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
+    newTodo.title = newTodo.title.trim()
+    newTodo.description = newTodo.description.trim()
 
+    if(!newTodo.title) {
+      setIsTitleFilled(false)
+      return
+    }
     const newTodoWithDate = {...newTodo, createdAt: Date.now()}
 
     dispatch(addTodo(newTodoWithDate));
@@ -38,12 +45,17 @@ const AddTodo = () => {
             type="text"
             value={newTodo.title}
             placeholder="Type todo title here"
-            onChange={(e) =>
+            onChange={(e) => {
               setNewTodo({ ...newTodo, title: e.target.value })
+              setIsTitleFilled(true)
+              }
             }
             required={true}
             className="border px-5 py-2"
           />
+          {
+            isTitleFilled ? "" : (<p className="text-red-500 text-sm">Title cannot be empty</p>)
+          }
         </div>
 
         <div className="flex flex-col">
@@ -58,7 +70,7 @@ const AddTodo = () => {
           ></textarea>
         </div>
 
-        <button className="bg-green-400 py-2 px-5">Add</button>
+        <button className="bg-green-400 hover:bg-green-500 py-2 px-5">Add</button>
       </form>
     </>
   );
