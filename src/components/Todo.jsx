@@ -1,7 +1,7 @@
 import { MdDeleteForever } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { markTodoCompleted } from "../redux/actions/todoActions";
+import { markTodoCompleted, removeTodo } from "../redux/actions/todoActions";
 
 const Todo = ({ todo }) => {
   const date = new Date(todo.createdAt);
@@ -31,7 +31,10 @@ const Todo = ({ todo }) => {
       </div>
       <div className="flex gap-2">
         <MdModeEditOutline title="Edit" className="h-full text-[2em] text-blue-400 hover:text-blue-500" />
-        <MdDeleteForever title="Delete" className="h-full text-[2em] text-red-400 hover:text-red-500" />
+        <MdDeleteForever 
+          title="Delete" 
+          className="h-full text-[2em] text-red-400 hover:text-red-500" 
+          onClick={() => dispatch(removeTodo(todo.createdAt))}/>
       </div>
     </div>
   );
