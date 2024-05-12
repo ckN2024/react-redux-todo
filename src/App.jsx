@@ -1,10 +1,16 @@
-// import './App.css'
+import AddTodo from "./components/AddTodo"
 
 function App() {
 
   return (
     <>
-      <p className='bg-blue-200'>Hello world</p>
+      {/* Conatiner div */}
+      <div className="flex justify-center items-center h-screen">
+
+        <div className="">
+          <AddTodo />
+        </div>
+      </div>
     </>
   )
 }
