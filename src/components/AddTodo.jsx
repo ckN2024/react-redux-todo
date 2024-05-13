@@ -7,7 +7,6 @@ const AddTodo = () => {
     title: "",
     description: "",
     isCompleted: false,
-    createdAt: null
   });
   const [isTitleFilled, setIsTitleFilled] = useState(true)
 
@@ -22,13 +21,14 @@ const AddTodo = () => {
       setIsTitleFilled(false)
       return
     }
-    const newTodoWithDate = {...newTodo, createdAt: Date.now()}
 
-    dispatch(addTodo(newTodoWithDate));
+    console.log(`newTodo:`, newTodo)
+    dispatch(addTodo(newTodo));
     
     setNewTodo({
       title: "",
       description: "",
+      isCompleted: false,
       createdAt: null
     });
   };

@@ -18,9 +18,22 @@ const TodoReducers = (state = initialState, action) => {
 
   switch (type) {
     case ADD_TODO: {
-      state.todos = [payload.todo, ...state.todos];
-      console.log(state);
-      return { ...state };
+      // state.todos = [payload.todo, ...state.todos];
+      // console.log(state);
+      // return { ...state };
+      // above code directly mutates the state which is not recommended in redux
+
+      // put createdAt in the new todo
+      payload.todo = {...payload.todo, createdAt: Date.now()}
+
+      // create a new todos array
+      const newTodos = [payload.todo, ...state.todos]
+
+      // return the new state
+      return {
+        ...state,
+        todos: newTodos
+      }
     }
 
     case MARK_TODO_COMPLETED: {
