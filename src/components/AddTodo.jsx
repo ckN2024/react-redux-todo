@@ -35,42 +35,45 @@ const AddTodo = () => {
 
   return (
     <>
-      <form onSubmit={submitHandler} className="flex flex-col gap-3">
-        <h1 className="text-[2em] font-semibold">Add Todo</h1>
-        <hr className="h-[0.2em] bg-gray-400"/>
-
+      <form 
+        onSubmit={submitHandler} 
+        className="flex flex-col gap-3 text-sm"
+      >
         <div className="flex flex-col">
-          <label htmlFor="title">Title</label>
           <input
             type="text"
             value={newTodo.title}
-            placeholder="Type todo title here"
+            placeholder="Title"
             onChange={(e) => {
               setNewTodo({ ...newTodo, title: e.target.value })
               setIsTitleFilled(true)
               }
             }
-            required={true}
-            className="border px-5 py-2"
+            className="border px-3 py-1 rounded-[15px] focus:outline-none focus:border-green-500"
           />
           {
-            isTitleFilled ? "" : (<p className="text-red-500 text-sm">Title cannot be empty</p>)
+            isTitleFilled ? "" : (<p className="text-red-500 text-sm">* Title is mandatory</p>)
           }
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="description">Description</label>
           <textarea 
             id="description" 
-            rows="3" 
+            rows="2" 
             value={newTodo.description}
-            placeholder="Type todo description here"
-            className="border px-5 py-2"
+            placeholder="Description"
             onChange={(e)=> setNewTodo({...newTodo, description: e.target.value})}
+            className="border px-3 py-1 rounded-[20px] focus:outline-none focus:border-green-500"
           ></textarea>
         </div>
 
-        <button className="bg-green-400 hover:bg-green-500 py-2 px-5">Add</button>
+        <div className="flex justify-center">
+          <button 
+            className="bg-green-500 text-white hover:bg-green-600 py-[0.3em] px-5 rounded-full min-w-fit w-[7em]"
+          >
+            Add
+          </button>
+        </div>
       </form>
     </>
   );

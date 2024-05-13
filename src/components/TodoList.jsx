@@ -6,10 +6,7 @@ const TodoList = () => {
   const todos = useSelector((state) => state.TodoReducers.todos);
 
   return (
-    <div className="flex flex-col gap-3">
-      <h1 className="text-[2em] font-semibold">Todos</h1>
-      <hr className="h-[0.2em] bg-gray-400" />
-
+    <div className="flex flex-col overflow-y-auto h-full gap-1 text-sm noscrollbar">
       {todos.map((todo) => (
         <div key={todo.createdAt}>
           <Todo todo={todo}/>

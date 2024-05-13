@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const TodoReducers = (state = initialState, action) => {
-  const { ADD_TODO, MARK_TODO_COMPLETED, REMOVE_TODO } = todoActionTypes;
+  const { ADD_TODO, MARK_TODO_COMPLETED, REMOVE_TODO, EDIT_TODO } = todoActionTypes;
 
   const { type, payload } = action;
 
@@ -45,6 +45,36 @@ const TodoReducers = (state = initialState, action) => {
       // remove the todo from the todos array
       const newTodos = state.todos.filter((todo) => (todo.createdAt !== payload.createdAt))
       
+      return {
+        ...state,
+        todos: newTodos
+      }
+    }
+
+    case EDIT_TODO: {
+      // find the todo by createdAt
+      const todoToUpdate = state.todos.find(
+        (todo) => todo.createdAt === payload.updatedTodo.createdAt
+      );
+
+      // make a new updated the todo
+      const updatedTodo = {
+        title: payload.updatedTodo.title,
+        description: payload.updatedTodo.description,
+        isCompleted: false,
+        createdAt: Date.now()
+      }
+      
+      // make a new todos array with the updated todo
+      const newTodos = state.todos.map((todo) => {
+        if(todo.createdAt === todoToUpdate.createdAt) {
+          return updatedTodo
+        } else {
+          return todo
+        }
+      })
+
+      // return the new state
       return {
         ...state,
         todos: newTodos

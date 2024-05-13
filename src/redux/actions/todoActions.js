@@ -21,4 +21,11 @@ const removeTodo = (createdAt) => {
     }
 }
 
-export {addTodo, markTodoCompleted, removeTodo}
+const editTodo = (updatedTodo) => {
+    return {
+        type: todoActionTypes.EDIT_TODO,
+        payload: {updatedTodo}
+    }
+}
+
+export {addTodo, markTodoCompleted, removeTodo, editTodo}
