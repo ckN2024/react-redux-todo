@@ -37,7 +37,7 @@ const AddTodo = () => {
     <>
       <form 
         onSubmit={submitHandler} 
-        className="flex flex-col gap-3 text-sm"
+        className="flex flex-col gap-3 text-sm p-[0.5em] sm:p-[1em] md:p-[1.5em] lg:p-[2em]"
       >
         <div className="flex flex-col">
           <input
@@ -63,7 +63,7 @@ const AddTodo = () => {
             value={newTodo.description}
             placeholder="Description"
             onChange={(e)=> setNewTodo({...newTodo, description: e.target.value})}
-            className="border px-3 py-1 rounded-[20px] focus:outline-none focus:border-green-500"
+            className="border px-3 py-1 rounded-[20px] focus:outline-none focus:border-green-500 noscrollbar"
           ></textarea>
         </div>
 

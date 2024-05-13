@@ -1,7 +1,7 @@
 const mockTodos = [
     {
         title: "First todo",
-        description: "description of first todo",
+        description: "description of first todo https://www.google.com",
         isCompleted: false,
         index: 0,
         createdAt: 1715512701834
