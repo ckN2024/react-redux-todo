@@ -7,7 +7,12 @@ const initialState = {
 };
 
 const TodoReducers = (state = initialState, action) => {
-  const { ADD_TODO, MARK_TODO_COMPLETED, REMOVE_TODO, EDIT_TODO } = todoActionTypes;
+  const { 
+    ADD_TODO, 
+    MARK_TODO_COMPLETED, 
+    REMOVE_TODO, EDIT_TODO, 
+    SORT_BY_NEWEST_FIRST, 
+    SORT_BY_OLDEST_FIRST } = todoActionTypes;
 
   const { type, payload } = action;
 
@@ -71,6 +76,52 @@ const TodoReducers = (state = initialState, action) => {
           return updatedTodo
         } else {
           return todo
+        }
+      })
+
+      // return the new state
+      return {
+        ...state,
+        todos: newTodos
+      }
+    }
+
+    case SORT_BY_NEWEST_FIRST: {
+      // make a copy of the todos state
+      const newTodos = [...state.todos]
+
+      // sort the todos in descending order of createdAt
+      // newTodos.sort((a, b)=>(b.createdAt - a.createdAt))
+
+      // completed todos are not sorted
+      newTodos.sort((a, b) => {
+        if (a.isCompleted || b.isCompleted) {
+          return 0; // Stop sorting if either isCompleted is true
+        } else {
+          return b.createdAt - a.createdAt; // Continue sorting based on createdAt
+        }
+      })
+
+      // return the new state
+      return {
+        ...state,
+        todos: newTodos
+      }
+    }
+
+    case SORT_BY_OLDEST_FIRST: {
+      // make a copy of the todos state
+      const newTodos = [...state.todos]
+
+      // sort the todos in ascending order of createdAt
+      // newTodos.sort((a, b)=>(a.createdAt - b.createdAt))
+
+      // completed todos are not sorted
+      newTodos.sort((a, b)=>{
+        if (a.isCompleted || b.isCompleted) {
+          return 0; // Stop sorting if either isCompleted is true
+        } else {
+          return a.createdAt - b.createdAt; // Continue sorting based on createdAt
         }
       })
 

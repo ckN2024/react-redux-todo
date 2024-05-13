@@ -28,4 +28,25 @@ const editTodo = (updatedTodo) => {
     }
 }
 
-export {addTodo, markTodoCompleted, removeTodo, editTodo}
+const sortByNewestFirst = () => {
+    return {
+        type: todoActionTypes.SORT_BY_NEWEST_FIRST,
+        payload: {}
+    }
+}
+
+const sortByOldestFirst = () => {
+    return {
+        type: todoActionTypes.SORT_BY_OLDEST_FIRST,
+        payload: {}
+    }
+}
+
+export {
+    addTodo, 
+    markTodoCompleted, 
+    removeTodo, 
+    editTodo, 
+    sortByNewestFirst,
+    sortByOldestFirst
+}

@@ -42,7 +42,7 @@ const Todo = ({ todo }) => {
 
   return (
     <div className="hover:bg-gray-100 shadow p-2 flex gap-[2em] rounded-lg">
-      <input type="checkbox" className="w-4 h-4 appearance-none border rounded-full border-gray-700 cursor-pointer checked:bg-blue-500 my-auto" onClick={todoStateHandler} />
+      <input type="checkbox" className="w-4 h-4 my-auto" onClick={todoStateHandler} />
       <div className="grow">
         {
           isEditModeOn ? (
@@ -103,12 +103,12 @@ const Todo = ({ todo }) => {
         }
         
       </div>
-      <div className="flex gap-2">
-        <RxCross2 
-          title="Remove" 
-          className="h-full text-[1.2em] text-gray-400 hover:text-red-500" 
-          onClick={() => dispatch(removeTodo(todo.createdAt))}/>
-      </div>
+  
+      <RxCross2 
+        title="Remove" 
+        className="my-auto text-[1.2em] text-gray-400 hover:text-red-500 hover:scale-[1.2] duration-300" 
+        onClick={() => dispatch(removeTodo(todo.createdAt))}/>
+      
     </div>
   );
 };
