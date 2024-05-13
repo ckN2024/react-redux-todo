@@ -12,6 +12,7 @@ const Todo = ({ todo }) => {
   const year = date.getFullYear();
 
   const [isEditModeOn, setIsEditModeOn] = useState(false)
+  const [isTitleFilled, setIsTitleFilled] = useState(true)
   const [editedTodo, setEditedTodo] = useState({
     title: todo.title,
     description: todo.description,
@@ -20,6 +21,20 @@ const Todo = ({ todo }) => {
   });
 
   const dispatch = useDispatch()
+
+  const editTodoSubmitHandler = (e) => {
+    e.preventDefault()
+
+    editedTodo.title = editedTodo.title.trim()
+    editedTodo.description = editedTodo.description.trim()
+
+    if(!editedTodo.title) {
+      setIsTitleFilled(false)
+      return
+    }
+
+    dispatch(editTodo(editedTodo))
+  }
 
   const todoStateHandler = () => {
     dispatch(markTodoCompleted(todo.createdAt))   
@@ -32,14 +47,22 @@ const Todo = ({ todo }) => {
         {
           isEditModeOn ? (
             // for editing a todo
-              <div className="flex flex-col items-center gap-1">
-                <input 
-                  type="text" 
-                  placeholder="title"
-                  value={editedTodo.title}
-                  onChange={(e) => {setEditedTodo({...editedTodo, title: e.target.value})}}
-                  className="border px-3 py-[0.3em] rounded-[15px] focus:outline-none focus:border-green-500 w-full"
-                />
+              <form className="flex flex-col items-center gap-1" onSubmit={editTodoSubmitHandler}>
+                <div className="flex flex-col w-full">
+                  <input 
+                    type="text" 
+                    placeholder="title"
+                    value={editedTodo.title}
+                    onChange={(e) => {
+                      setEditedTodo({...editedTodo, title: e.target.value})
+                      setIsTitleFilled(true)
+                    }}
+                    className={`border px-3 py-[0.3em] rounded-[15px] focus:outline-none focus:border-green-500 w-full ${editedTodo.title.trim() === "" ? "focus:border-red-500":""}`}
+                  />
+                  {
+                    isTitleFilled ? "" : (<p className="text-red-500 text-sm">* Title is mandatory</p>)
+                  }
+                </div>
                 <textarea
                   rows="2"
                   placeholder="Description"
@@ -50,7 +73,7 @@ const Todo = ({ todo }) => {
 
                 <div className="flex gap-3">
                   <button 
-                    onClick={() => dispatch(editTodo(editedTodo))}
+                    type="submit"
                     className="bg-blue-500 text-white hover:bg-blue-600 py-[0.3em] px-5 rounded-full min-w-fit w-[7em]"
                   >
                     Update
@@ -62,7 +85,7 @@ const Todo = ({ todo }) => {
                     Keep Existing
                   </button>
                 </div>
-              </div>
+              </form>
             ) : (
             // for displaying a todo
             <div onClick={() => setIsEditModeOn(!isEditModeOn)}>

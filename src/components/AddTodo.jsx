@@ -49,7 +49,7 @@ const AddTodo = () => {
               setIsTitleFilled(true)
               }
             }
-            className="border px-3 py-1 rounded-[15px] focus:outline-none focus:border-green-500"
+            className={`border px-3 py-1 rounded-[15px] focus:outline-none focus:border-green-500 ${newTodo.title.trim() === "" ? "focus:border-red-500":""}`}
           />
           {
             isTitleFilled ? "" : (<p className="text-red-500 text-sm">* Title is mandatory</p>)
@@ -69,6 +69,7 @@ const AddTodo = () => {
 
         <div className="flex justify-center">
           <button 
+            type="submit"
             className="bg-green-500 text-white hover:bg-green-600 py-[0.3em] px-5 rounded-full min-w-fit w-[7em]"
           >
             Add
