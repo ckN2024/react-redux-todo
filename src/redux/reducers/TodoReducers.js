@@ -9,7 +9,7 @@ const initialState = {
 const TodoReducers = (state = initialState, action) => {
   const { 
     ADD_TODO, 
-    MARK_TODO_COMPLETED, 
+    CHANGE_TODO_COMPLETED_STATE, 
     REMOVE_TODO, EDIT_TODO, 
     SORT_BY_NEWEST_FIRST, 
     SORT_BY_OLDEST_FIRST } = todoActionTypes;
@@ -23,11 +23,17 @@ const TodoReducers = (state = initialState, action) => {
       // return { ...state };
       // above code directly mutates the state which is not recommended in redux
 
-      // put createdAt in the new todo
-      payload.todo = {...payload.todo, createdAt: Date.now()}
+      // put createdAt & index in the new todo
+      payload.todo = {...payload.todo, createdAt: Date.now(), index: 0}
+
+      // change the index all elements in the existing todos
+      let newTodos = state.todos.map((todo) => {
+        todo.index = todo.index + 1
+        return todo;
+      })
 
       // create a new todos array
-      const newTodos = [payload.todo, ...state.todos]
+      newTodos = [payload.todo, ...newTodos]
 
       // return the new state
       return {
@@ -36,7 +42,7 @@ const TodoReducers = (state = initialState, action) => {
       }
     }
 
-    case MARK_TODO_COMPLETED: {
+    case CHANGE_TODO_COMPLETED_STATE: {
       // find the todo
       const currentTodo = state.todos.find(
         (todo) => todo.createdAt === payload.createdAt
@@ -44,19 +50,32 @@ const TodoReducers = (state = initialState, action) => {
       // modify the completed state
       currentTodo.isCompleted = !currentTodo.isCompleted;
 
-      // remove the todo
+      // remove the todo in a new todos array
       const filteredTodos = state.todos.filter(
         (todo) => todo.createdAt !== payload.createdAt
       );
 
       // if completed insert it in the end
+      let newTodos;
       if (currentTodo.isCompleted === true) {
-        state.todos = [...filteredTodos, currentTodo];
+        newTodos = [...filteredTodos, currentTodo];
       } else {
-        state.todos = [currentTodo, ...filteredTodos];
+        newTodos = [currentTodo, ...filteredTodos];
+
+        // sort the newtodos according to their index
+        newTodos.sort((a, b)=>{
+          if (a.isCompleted || b.isCompleted) {
+            return 0; // Stop sorting if either isCompleted is true
+          } else {
+            return a.index - b.index; // Continue sorting based on createdAt
+          }
+        })
       }
 
-      return { ...state };
+      return { 
+        ...state,
+        todos: newTodos
+      };
     }
 
     case REMOVE_TODO: {

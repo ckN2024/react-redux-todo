@@ -2,7 +2,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector, useDispatch } from "react-redux";
-import { markTodoCompleted, removeTodo, editTodo } from "../redux/actions/todoActions";
+import { changeTodoCompletedState, removeTodo, editTodo } from "../redux/actions/todoActions";
 import { useState } from "react";
 
 const Todo = ({ todo }) => {
@@ -37,7 +37,7 @@ const Todo = ({ todo }) => {
   }
 
   const todoStateHandler = () => {
-    dispatch(markTodoCompleted(todo.createdAt))   
+    dispatch(changeTodoCompletedState(todo.createdAt))   
   }
 
   return (

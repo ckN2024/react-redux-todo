@@ -7,9 +7,9 @@ const addTodo = (todo) => {
     }
 }
 
-const markTodoCompleted = (createdAt) => {
+const changeTodoCompletedState = (createdAt) => {
     return {
-        type: todoActionTypes.MARK_TODO_COMPLETED,
+        type: todoActionTypes.CHANGE_TODO_COMPLETED_STATE,
         payload: {createdAt}
     }
 }
@@ -44,7 +44,7 @@ const sortByOldestFirst = () => {
 
 export {
     addTodo, 
-    markTodoCompleted, 
+    changeTodoCompletedState, 
     removeTodo, 
     editTodo, 
     sortByNewestFirst,
