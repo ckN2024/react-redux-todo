@@ -1,9 +1,8 @@
 import todoActionTypes from "../actions/actionTypes/todoActionTypes";
-import mockTodos from "../../mockTodos.js";
 
 const initialState = {
   // todos: []
-  todos: mockTodos,
+  todos: JSON.parse(localStorage.getItem("todos"))
 };
 
 const TodoReducers = (state = initialState, action) => {
@@ -34,6 +33,8 @@ const TodoReducers = (state = initialState, action) => {
 
       // create a new todos array
       newTodos = [payload.todo, ...newTodos]
+
+      localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
       return {
@@ -72,6 +73,8 @@ const TodoReducers = (state = initialState, action) => {
         })
       }
 
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       return { 
         ...state,
         todos: newTodos
@@ -82,6 +85,8 @@ const TodoReducers = (state = initialState, action) => {
       // remove the todo from the todos array
       const newTodos = state.todos.filter((todo) => (todo.createdAt !== payload.createdAt))
       
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       return {
         ...state,
         todos: newTodos
@@ -111,6 +116,8 @@ const TodoReducers = (state = initialState, action) => {
         }
       })
 
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+
       // return the new state
       return {
         ...state,
@@ -125,7 +132,7 @@ const TodoReducers = (state = initialState, action) => {
       // sort the todos in descending order of createdAt
       // newTodos.sort((a, b)=>(b.createdAt - a.createdAt))
 
-      // completed todos are not sorted
+      // incomplete todos are sorted
       newTodos.sort((a, b) => {
         if (a.isCompleted || b.isCompleted) {
           return 0; // Stop sorting if either isCompleted is true
@@ -133,6 +140,8 @@ const TodoReducers = (state = initialState, action) => {
           return b.createdAt - a.createdAt; // Continue sorting based on createdAt
         }
       })
+
+      localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
       return {
@@ -148,7 +157,7 @@ const TodoReducers = (state = initialState, action) => {
       // sort the todos in ascending order of createdAt
       // newTodos.sort((a, b)=>(a.createdAt - b.createdAt))
 
-      // completed todos are not sorted
+      // incomplete todos are sorted
       newTodos.sort((a, b)=>{
         if (a.isCompleted || b.isCompleted) {
           return 0; // Stop sorting if either isCompleted is true
@@ -156,6 +165,8 @@ const TodoReducers = (state = initialState, action) => {
           return a.createdAt - b.createdAt; // Continue sorting based on createdAt
         }
       })
+
+      localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
       return {

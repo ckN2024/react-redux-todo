@@ -3,7 +3,7 @@ import { sortByNewestFirst, sortByOldestFirst } from "../redux/actions/todoActio
 
 const SortingMenu = () => {
     const dispatch = useDispatch()
-
+  
   return (
     <div className="flex gap-2 px-[0.5em] sm:px-[1em] md:px-[1.5em] lg:px-[2em] mb-2">
       <button

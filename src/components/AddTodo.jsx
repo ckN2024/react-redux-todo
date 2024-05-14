@@ -22,7 +22,6 @@ const AddTodo = () => {
       return
     }
 
-    console.log(`newTodo:`, newTodo)
     dispatch(addTodo(newTodo));
     
     setNewTodo({
