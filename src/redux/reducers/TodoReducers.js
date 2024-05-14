@@ -1,8 +1,9 @@
 import todoActionTypes from "../actions/actionTypes/todoActionTypes";
+import mockTodos from "../../mockTodos";
 
 const initialState = {
   // todos: []
-  todos: JSON.parse(localStorage.getItem("todos"))
+  todos: JSON.parse(localStorage.getItem("todos")) || mockTodos
 };
 
 const TodoReducers = (state = initialState, action) => {
@@ -17,11 +18,6 @@ const TodoReducers = (state = initialState, action) => {
 
   switch (type) {
     case ADD_TODO: {
-      // state.todos = [payload.todo, ...state.todos];
-      // console.log(state);
-      // return { ...state };
-      // above code directly mutates the state which is not recommended in redux
-
       // put createdAt & index in the new todo
       payload.todo = {...payload.todo, createdAt: Date.now(), index: 0}
 
@@ -34,6 +30,7 @@ const TodoReducers = (state = initialState, action) => {
       // create a new todos array
       newTodos = [payload.todo, ...newTodos]
 
+      // update the todos in localstorage
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
@@ -73,8 +70,10 @@ const TodoReducers = (state = initialState, action) => {
         })
       }
 
+      // update the todos in localstorage
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
+      // return the new state
       return { 
         ...state,
         todos: newTodos
@@ -85,8 +84,10 @@ const TodoReducers = (state = initialState, action) => {
       // remove the todo from the todos array
       const newTodos = state.todos.filter((todo) => (todo.createdAt !== payload.createdAt))
       
+      // update the todos in localstorage
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
+      // return the new state
       return {
         ...state,
         todos: newTodos
@@ -116,6 +117,7 @@ const TodoReducers = (state = initialState, action) => {
         }
       })
 
+      // update the todos in localstorage
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
@@ -129,18 +131,16 @@ const TodoReducers = (state = initialState, action) => {
       // make a copy of the todos state
       const newTodos = [...state.todos]
 
-      // sort the todos in descending order of createdAt
-      // newTodos.sort((a, b)=>(b.createdAt - a.createdAt))
-
-      // incomplete todos are sorted
+      // incomplete todos are sorted in descending order of createdAt
       newTodos.sort((a, b) => {
         if (a.isCompleted || b.isCompleted) {
-          return 0; // Stop sorting if either isCompleted is true
+          return 0; // Stop sorting if either is completed
         } else {
           return b.createdAt - a.createdAt; // Continue sorting based on createdAt
         }
       })
 
+      // update the todos in localstorage
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
@@ -154,18 +154,16 @@ const TodoReducers = (state = initialState, action) => {
       // make a copy of the todos state
       const newTodos = [...state.todos]
 
-      // sort the todos in ascending order of createdAt
-      // newTodos.sort((a, b)=>(a.createdAt - b.createdAt))
-
-      // incomplete todos are sorted
+      // incomplete todos are sorted in ascending order of createdAt
       newTodos.sort((a, b)=>{
         if (a.isCompleted || b.isCompleted) {
-          return 0; // Stop sorting if either isCompleted is true
+          return 0; // Stop sorting if either is completed
         } else {
           return a.createdAt - b.createdAt; // Continue sorting based on createdAt
         }
       })
 
+      // update the todos in localstorage
       localStorage.setItem("todos", JSON.stringify(newTodos));
 
       // return the new state
