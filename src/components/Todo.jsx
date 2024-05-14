@@ -28,7 +28,7 @@ const Todo = ({ todo }) => {
 
   const dispatch = useDispatch();
 
-
+  // Edit and Submit is handled here
   const editAndSubmitHandler = (e) => {
     if(isEditModeOn) {
       editTodoSubmitHandler(e)
@@ -37,23 +37,27 @@ const Todo = ({ todo }) => {
     }
   }
 
+  // to handle submit
   const editTodoSubmitHandler = (e) => {
     e.preventDefault();
 
-    // if(isEditModeOn) {
+    // trimming title and description
     editedTodo.title = editedTodo.title.trim();
     editedTodo.description = editedTodo.description.trim();
 
+    // for validation purposes
     if (!editedTodo.title) {
       setIsTitleFilled(false);
       return;
     }
 
+    // dispatch action to edit the todo
     dispatch(editTodo(editedTodo));
     setIsEditModeOn(false);
     // }
   };
 
+  // completed todo state handler
   const todoStateHandler = (e) => {
     e.stopPropagation()
     dispatch(changeTodoCompletedState(todo.createdAt));
@@ -64,6 +68,7 @@ const Todo = ({ todo }) => {
       onClick={editAndSubmitHandler} 
       className="hover:bg-gray-100 shadow p-2 flex gap-[2em] rounded-lg"
     >
+       {/* completed or not completed indicator checkbox  */}
       <input
         type="checkbox"
         className="min-w-4 min-h-4 my-auto"
@@ -75,9 +80,9 @@ const Todo = ({ todo }) => {
           <div className="flex gap-2">
             <div
               className="flex flex-col items-center gap-1 grow"
-              // onClick={editTodoSubmitHandler}
             >
               <div className="flex flex-col w-full">
+                 {/* title input while editing */}
                 <input
                   type="text"
                   placeholder="title"
@@ -97,6 +102,8 @@ const Todo = ({ todo }) => {
                   <p className="text-red-500 text-sm">* Title is mandatory</p>
                 )}
               </div>
+
+              {/* description input while editing */}
               <textarea
                 rows="2"
                 placeholder="Description"
@@ -109,6 +116,7 @@ const Todo = ({ todo }) => {
               ></textarea>
             </div>
 
+            {/* cross button to remove the todo */}
             <RxCross2
               title="Remove"
               className="my-auto min-w-4 text-[1.2em] text-gray-400 hover:text-red-500 hover:scale-[1.2] duration-300"
@@ -122,10 +130,10 @@ const Todo = ({ todo }) => {
           // for displaying a todo
           <div
             className="w-full flex justify-between"
-            // onClick={() => setIsEditModeOn(!isEditModeOn)}
           >
             <div>
               <div className="flex">
+                {/* todo title */}
                 <div
                   className={`font-semibold ${
                     todo.isCompleted ? "line-through" : ""
@@ -133,13 +141,14 @@ const Todo = ({ todo }) => {
                 >
                   {todo.title}
                 </div>
+
+                {/* todo created date */}
                 <div className="italic text-xs text-gray-600 ml-4">
-                  {/* ({day}/{month}/{year}) */}
                   {date.toLocaleDateString()}
                 </div>
 
+                {/* todo created time */}
                 <div className="italic text-xs text-gray-600 ml-4">
-                  {/* ({day}/{month}/{year}) */}
                   {date.toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -147,6 +156,8 @@ const Todo = ({ todo }) => {
                   })}
                 </div>
               </div>
+
+              {/* todo description */}
               <p
                 className={`italic text-gray-600 ${
                   todo.isCompleted ? "line-through" : ""
@@ -158,6 +169,7 @@ const Todo = ({ todo }) => {
               </p>
             </div>
 
+            {/* todo remove icon */}
             <RxCross2
               title="Remove"
               className="my-auto min-w-4 text-[1.2em] text-gray-400 hover:text-red-500 hover:scale-[1.2] duration-300"

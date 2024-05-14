@@ -2,7 +2,6 @@ import todoActionTypes from "../actions/actionTypes/todoActionTypes";
 import mockTodos from "../../mockTodos";
 
 const initialState = {
-  // todos: []
   todos: JSON.parse(localStorage.getItem("todos")) || mockTodos
 };
 

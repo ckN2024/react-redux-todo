@@ -12,16 +12,21 @@ const AddTodo = () => {
 
   const dispatch = useDispatch();
 
+  // add todo handler
   const submitHandler = (e) => {
     e.preventDefault();
+
+    // trim the title and description
     newTodo.title = newTodo.title.trim()
     newTodo.description = newTodo.description.trim()
 
+    // for validation purposes
     if(!newTodo.title) {
       setIsTitleFilled(false)
       return
     }
 
+    // dispatch action to add todo
     dispatch(addTodo(newTodo));
     
     setNewTodo({
@@ -38,7 +43,9 @@ const AddTodo = () => {
         onSubmit={submitHandler} 
         className="flex flex-col gap-3 text-sm p-[0.5em] sm:p-[1em] md:p-[1.5em] lg:p-[2em] max-h-[35%]"
       >
+        
         <div className="flex flex-col">
+          {/* todo title input */}
           <input
             type="text"
             value={newTodo.title}
@@ -56,6 +63,7 @@ const AddTodo = () => {
         </div>
 
         <div className="flex flex-col">
+          {/* todo description input */}
           <textarea 
             id="description" 
             rows="2" 
@@ -67,6 +75,7 @@ const AddTodo = () => {
         </div>
 
         <div className="flex justify-center">
+          {/* Add button */}
           <button 
             type="submit"
             className="bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-400 text-white hover:from-indigo-500 hover:via-blue-600 hover:to-cyan-500 py-[0.3em] px-5 rounded-full min-w-fit w-[7em]"

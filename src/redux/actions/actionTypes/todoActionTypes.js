@@ -7,4 +7,7 @@ const todoActionTypes = {
     SORT_BY_OLDEST_FIRST: "SORT_BY_OLDEST_FIRST"
 }
 
+// freeze types to restrict changes
+Object.freeze(todoActionTypes)
+
 export default todoActionTypes
