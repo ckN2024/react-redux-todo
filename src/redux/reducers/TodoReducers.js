@@ -44,18 +44,21 @@ const TodoReducers = (state = initialState, action) => {
       const currentTodo = state.todos.find(
         (todo) => todo.createdAt === payload.createdAt
       );
-      // modify the completed state
+
+      // change the completed state
       currentTodo.isCompleted = !currentTodo.isCompleted;
 
       // remove the todo in a new todos array
       const filteredTodos = state.todos.filter(
         (todo) => todo.createdAt !== payload.createdAt
       );
+      console.log(filteredTodos)
 
       // if completed insert it in the end
       let newTodos;
       if (currentTodo.isCompleted === true) {
         newTodos = [...filteredTodos, currentTodo];
+        // console.log(newTodos)
       } else {
         newTodos = [currentTodo, ...filteredTodos];
 

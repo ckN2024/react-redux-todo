@@ -33,11 +33,6 @@ const Todo = ({ todo }) => {
       editTodoSubmitHandler(e)
     } else {
       setIsEditModeOn(!isEditModeOn)
-
-      // // to delay slightly and wait for the above state update
-      // setTimeout(() => {
-      //   editInputRef.current.focus();
-      // }, 0);
     }
   }
 
@@ -71,17 +66,21 @@ const Todo = ({ todo }) => {
   return (
     <div
       onClick={editAndSubmitHandler} 
-      onBlur={(e) => {
-        console.log("onblur triggered")
-        editTodoSubmitHandler(e)
-      }}
+      // onBlur={(e) => {
+      //   console.log("onBlur triggred")
+      //   editTodoSubmitHandler(e)
+      // }}
       className="hover:bg-gray-100 shadow p-2 flex gap-[2em] rounded-lg"
     >
        {/* completed or not completed indicator checkbox  */}
       <input
         type="checkbox"
         className="min-w-4 min-h-4 my-auto"
-        onClick={(e) => todoStateHandler(e)}
+        onClick={(e) => {
+          e.stopPropagation()
+          todoStateHandler(e)
+        }}
+        onChange={e => e.stopPropagation()}
       />
       <div className="grow">
         {isEditModeOn ? (
