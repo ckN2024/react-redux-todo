@@ -1,17 +1,16 @@
-import { MdDeleteForever } from "react-icons/md";
-import { MdModeEditOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   changeTodoCompletedState,
   removeTodo,
   editTodo,
 } from "../redux/actions/todoActions";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import stringFormatter from "../helpers/stringFormatter.jsx";
 
 const Todo = ({ todo }) => {
   const date = new Date(todo.createdAt);
+  const editInputRef = useRef(null);
 
   const [isEditModeOn, setIsEditModeOn] = useState(false);
   const [isTitleFilled, setIsTitleFilled] = useState(true);
@@ -34,8 +33,14 @@ const Todo = ({ todo }) => {
       editTodoSubmitHandler(e)
     } else {
       setIsEditModeOn(!isEditModeOn)
+
+      // // to delay slightly and wait for the above state update
+      // setTimeout(() => {
+      //   editInputRef.current.focus();
+      // }, 0);
     }
   }
+
 
   // to handle submit
   const editTodoSubmitHandler = (e) => {
@@ -66,6 +71,10 @@ const Todo = ({ todo }) => {
   return (
     <div
       onClick={editAndSubmitHandler} 
+      onBlur={(e) => {
+        console.log("onblur triggered")
+        editTodoSubmitHandler(e)
+      }}
       className="hover:bg-gray-100 shadow p-2 flex gap-[2em] rounded-lg"
     >
        {/* completed or not completed indicator checkbox  */}
@@ -84,6 +93,7 @@ const Todo = ({ todo }) => {
               <div className="flex flex-col w-full">
                  {/* title input while editing */}
                 <input
+                  ref={editInputRef}
                   type="text"
                   placeholder="title"
                   value={editedTodo.title}
