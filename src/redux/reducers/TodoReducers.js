@@ -44,7 +44,7 @@ const TodoReducers = (state = initialState, action) => {
       const currentTodo = state.todos.find(
         (todo) => todo.createdAt === payload.createdAt
       );
-
+	console.log('current todo', currentTodo)
       // change the completed state
       currentTodo.isCompleted = !currentTodo.isCompleted;
 

@@ -41,9 +41,11 @@ const Todo = ({ todo }) => {
   const editTodoSubmitHandler = (e) => {
     e.preventDefault();
 
+	  console.log("editedtodo", editedTodo);
     // trimming title and description
     editedTodo.title = editedTodo.title.trim();
     editedTodo.description = editedTodo.description.trim();
+    editedTodo.isCompleted = editedTodo.isCompleted;
 
     // for validation purposes
     if (!editedTodo.title) {
@@ -60,27 +62,34 @@ const Todo = ({ todo }) => {
   // completed todo state handler
   const todoStateHandler = (e) => {
     e.stopPropagation()
+    setIsEditModeOn(false);
     dispatch(changeTodoCompletedState(todo.createdAt));
   };
 
+  const toggleEditModeFn = (e)=>{
+    setIsEditModeOn(false);
+    
+  }
   return (
     <div
       onClick={editAndSubmitHandler} 
-      // onBlur={(e) => {
-      //   console.log("onBlur triggred")
-      //   editTodoSubmitHandler(e)
-      // }}
+      //onBlur={(e) => {
+      //  console.log("onBlur triggred")
+      //   //editTodoSubmitHandler(e)
+	//toggleEditModeFn(e) 
+      //}}
       className="hover:bg-gray-100 shadow p-2 flex gap-[2em] rounded-lg"
     >
        {/* completed or not completed indicator checkbox  */}
       <input
         type="checkbox"
         className="min-w-4 min-h-4 my-auto"
+	checked={todo.isCompleted}
         onClick={(e) => {
           e.stopPropagation()
           todoStateHandler(e)
         }}
-        onChange={e => e.stopPropagation()}
+	onChange={e => e.stopPropagation()}
       />
       <div className="grow">
         {isEditModeOn ? (
@@ -97,6 +106,10 @@ const Todo = ({ todo }) => {
                   placeholder="title"
                   value={editedTodo.title}
                   onClick={(e)=> e.stopPropagation()}
+		      onBlur={(e) => {
+			console.log("onBlur triggred from input", e)
+			editTodoSubmitHandler(e)
+		      }}
                   onChange={(e) => {
                     setEditedTodo({ ...editedTodo, title: e.target.value });
                     setIsTitleFilled(true);
@@ -121,6 +134,10 @@ const Todo = ({ todo }) => {
                 onChange={(e) => {
                   setEditedTodo({ ...editedTodo, description: e.target.value });
                 }}
+		      onBlur={(e) => {
+			console.log("onBlur triggred from textarea checkbox")
+			editTodoSubmitHandler(e)
+		      }}
                 className="border px-3 py-[0.3em] rounded-[20px] focus:outline-none focus:border-green-500 w-full noscrollbar"
               ></textarea>
             </div>
